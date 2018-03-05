@@ -1,10 +1,11 @@
 package com.linsama.jit.command;
 
 @Command(
-    name = "init",
-    description = "init a jit repo"
+    name = "add",
+    hasArgs = true,
+    description = "add files to index"
 )
-public class InitCommand implements JitCommand {
+public class AddCommand implements JitCommand {
     @Override
     public void validateArguments(String[] args) {
 

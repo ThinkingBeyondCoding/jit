@@ -1,10 +1,14 @@
 package com.linsama.jit.command;
 
-public interface Command {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    String getName();
-
-    void validateArguments(String[] args);
-
-    void call();
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Command {
+    String name();
+    boolean hasArgs() default false;
+    String description();
 }

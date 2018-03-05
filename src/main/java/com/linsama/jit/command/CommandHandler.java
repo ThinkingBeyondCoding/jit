@@ -4,9 +4,16 @@ import org.apache.commons.cli.*;
 
 public class CommandHandler {
     private final Options options = new Options();
+    private Class[] commandClass = new Class[] {
+        InitCommand.class,
+        AddCommand.class
+    };
 
     public CommandHandler() {
-        options.addOption("init", false, "init a jit repo");
+        for (Class clazz : commandClass) {
+            Command command = (Command) clazz.getAnnotation(Command.class);
+            options.addOption(command.name(), command.hasArgs(), command.description());
+        }
     }
 
     public void parse(String[] args) {
@@ -18,7 +25,12 @@ public class CommandHandler {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine cmd = parser.parse(options, args);
-            System.out.println(cmd.hasOption("init"));
+            for (Class clazz : commandClass) {
+                Command command = (Command) clazz.getAnnotation(Command.class);
+                if (cmd.hasOption(command.name())) {
+                    System.out.println(String.format("parse %s successfully", command.name()));
+                }
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
