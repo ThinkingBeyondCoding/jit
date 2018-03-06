@@ -8,7 +8,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Command {
+
     String name();
+
     boolean hasArgs() default false;
+
     String description();
 }
